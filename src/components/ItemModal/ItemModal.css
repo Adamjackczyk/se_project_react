@@ -1,0 +1,39 @@
+.modal {
+}
+
+.modal__content_type_image {
+  padding: 0;
+}
+
+.modal__content {
+}
+
+.modal__close {
+  background: none;
+}
+
+.modal__image {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  width: 100%;
+}
+
+.modal__footer {
+}
+
+.modal__caption {
+  margin: 0;
+  padding-top: 20px;
+  padding-left: 32px;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.modal__weather {
+  padding-top: 12px;
+  padding-left: 32px;
+  padding-bottom: 32px;
+  margin: 0;
+  font-size: 20px;
+  line-height: 20px;
+}
