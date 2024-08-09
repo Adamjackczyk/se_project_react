@@ -1,0 +1,48 @@
+@font-face {
+  font-family: "CabinetGrotesk-Bold";
+  src: url(../../vendor/fonts/CabinetGrotesk-Bold.woff);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 32px 0 28px;
+}
+
+.header__logo {
+}
+
+.header__date-and-location {
+  margin: 0px;
+  margin-left: 24px;
+  font-family: "CabinetGrotesk-Bold";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.header__add-clothes-btn {
+  margin-left: auto;
+  font-family: "CabinetGrotesk-Bold";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.header__user-container {
+  display: flex;
+  align-items: center;
+}
+
+.header__username {
+  margin: 0px;
+  margin-left: 20px;
+  font-family: "CabinetGrotesk-Bold";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.header__avatar {
+  margin-left: 12px;
+}
