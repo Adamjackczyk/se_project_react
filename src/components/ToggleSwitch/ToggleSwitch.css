@@ -1,0 +1,59 @@
+@font-face {
+  font-family: "CabinetGrotesk-Bold";
+  src: url(../../vendor/fonts/CabinetGrotesk-Bold.woff);
+}
+
+.switch {
+  display: flex;
+  position: relative;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 17px;
+  font-family: "CabinetGrotesk-Bold";
+  padding-right: 20px;
+}
+
+.switch__box {
+  border-radius: 25px;
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  width: 56px;
+  height: 30px;
+  appearance: none;
+}
+
+.switch__slider {
+  border-radius: 20px;
+  width: 30px;
+  height: 30px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+}
+
+.switch__slider-F {
+}
+
+.switch__slider-C {
+  left: 26px;
+}
+
+.switch__temp-F {
+  position: absolute;
+  color: rgba(0, 0, 0, 0.5);
+  top: -7px;
+  left: 10px;
+}
+
+.switch__temp-C {
+  position: absolute;
+  color: rgba(0, 0, 0, 0.5);
+  top: -7px;
+  left: 35px;
+}
+
+.active {
+  opacity: 1;
+  color: white;
+}
