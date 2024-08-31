@@ -24,7 +24,27 @@ function App() {
   const [clothingItems, setClothingItems] = useState([]);
 
   const onAddItem = (values) => {
-    console.log(values);
+    const newItem = {
+      ...values,
+      _id:
+        clothingItems.length > 0
+          ? clothingItems[clothingItems.length - 1]._id + 1
+          : 0,
+    };
+
+    fetch("http://localhost:3001/items", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newItem),
+    })
+      .then((response) => response.json())
+      .then((createdItem) => {
+        setClothingItems((prevItems) => [...prevItems, createdItem]); // This line adds the new item to the state
+        closeModal();
+      })
+      .catch(console.error);
   };
 
   const handleCardClick = (card) => {
@@ -80,7 +100,12 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<Profile handleCardClick={handleCardClick} />}
+              element={
+                <Profile
+                  handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
+                />
+              }
             />
           </Routes>
           <Footer />
