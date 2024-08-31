@@ -40,6 +40,7 @@
   line-height: 24px;
   border: none;
   padding: 0;
+  cursor: pointer;
 }
 
 .header__user-container {
@@ -58,4 +59,9 @@
 
 .header__avatar {
   margin-left: 12px;
+}
+
+.header__profile-link {
+  text-decoration: none;
+  color: black;
 }
