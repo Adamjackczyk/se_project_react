@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
 import { coordinates, APIkey } from "../../utils/constants";
@@ -57,7 +56,6 @@ function App() {
 
   useEffect(() => {
     getItems()
-      .then((data) => console.log(data))
       .then((data) => setClothingItems(data))
       .catch(console.error);
   }, []);
@@ -76,6 +74,7 @@ function App() {
                 <Main
                   weatherData={weatherData}
                   handleCardClick={handleCardClick}
+                  clothingItems={clothingItems}
                 />
               }
             />
