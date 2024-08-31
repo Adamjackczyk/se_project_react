@@ -117,6 +117,9 @@ export const coordinates = {
   // latitude: 51.509865,
   // longitude: -0.118092,
   //london ^^
+  // latitude: 44.0165,
+  // longitude: 21.0059,
+  // serbia
 };
 
 export const APIkey = "c17a71d4622d559b5c6fdc0167bff5cf";
