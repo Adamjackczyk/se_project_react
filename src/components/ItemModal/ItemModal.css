@@ -19,19 +19,30 @@
 }
 
 .modal__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.modal__delete {
+  background: none;
+  border: none;
+  color: rgba(255, 77, 0, 1);
+  padding: 0;
+  cursor: pointer;
 }
 
 .modal__caption {
   margin: 0;
   padding-top: 20px;
-  padding-left: 32px;
+  padding-left: 12px;
   font-size: 20px;
   line-height: 24px;
 }
 
 .modal__weather {
   padding-top: 12px;
-  padding-left: 32px;
+  padding-left: 12px;
   padding-bottom: 32px;
   margin: 0;
   font-size: 20px;
