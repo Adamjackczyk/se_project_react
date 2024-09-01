@@ -56,7 +56,7 @@ function App() {
           setClothingItems((prevItems) =>
             prevItems.filter((item) => item._id !== id)
           );
-          closeModal(); // Close the modal after deletion
+          closeModal();
         }
       })
       .catch(console.error);
@@ -67,7 +67,6 @@ function App() {
   };
 
   const handleAddClick = () => {
-    console.log("Add button clicked");
     setActiveModal("add-garment");
   };
 
