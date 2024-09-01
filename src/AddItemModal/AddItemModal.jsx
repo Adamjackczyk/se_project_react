@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import ModalWithForm from "../components/ModalWithForm/ModalWithForm";
 
 const AddItemModal = ({ closeModal, onAddItem, isOpen }) => {
@@ -22,18 +22,20 @@ const AddItemModal = ({ closeModal, onAddItem, isOpen }) => {
     event.preventDefault();
 
     const values = {
-      name: name,
-      weather: weather,
+      name,
+      weather,
       imageUrl: link,
     };
 
     onAddItem(values);
-
+    // Clear the form after submission
     setName("");
     setImageUrl("");
     setWeather("");
+  };
 
-    closeModal();
+  const isFormValid = () => {
+    return name.trim() !== "" && link.trim() !== "" && weather.trim() !== "";
   };
 
   return (
@@ -109,6 +111,9 @@ const AddItemModal = ({ closeModal, onAddItem, isOpen }) => {
           Cold
         </label>
       </fieldset>
+      <button className="modal__submit" type="submit" disabled={!isFormValid()}>
+        Add garment
+      </button>
     </ModalWithForm>
   );
 };
