@@ -47,6 +47,20 @@ function App() {
       .catch(console.error);
   };
 
+  const handleDeleteItem = (id) => {
+    fetch(`http://localhost:3001/items/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setClothingItems((prevItems) =>
+            prevItems.filter((item) => item._id !== id)
+          );
+          closeModal(); // Close the modal after deletion
+        }
+      })
+      .catch(console.error);
+  };
   const handleCardClick = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
@@ -117,6 +131,7 @@ function App() {
           activeModal={activeModal}
           card={selectedCard}
           onClose={closeModal}
+          onDelete={handleDeleteItem}
         />
       </CurrentTemperatureUnitContext.Provider>
     </div>
