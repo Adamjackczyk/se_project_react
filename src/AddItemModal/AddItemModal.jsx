@@ -28,6 +28,12 @@ const AddItemModal = ({ closeModal, onAddItem, isOpen }) => {
     };
 
     onAddItem(values);
+
+    setName("");
+    setImageUrl("");
+    setWeather("");
+
+    closeModal();
   };
 
   return (

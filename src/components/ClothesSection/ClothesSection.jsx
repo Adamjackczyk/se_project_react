@@ -10,7 +10,6 @@ function ClothesSection({ clothingItems, handleAddClick, handleCardClick }) {
         <button
           type="button"
           onClick={() => {
-            console.log("Button clicked in ClothesSection");
             handleAddClick();
           }}
           className="clothes-section__button"
