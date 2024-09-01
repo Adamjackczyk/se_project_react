@@ -67,6 +67,7 @@ function App() {
   };
 
   const handleAddClick = () => {
+    console.log("Add button clicked");
     setActiveModal("add-garment");
   };
 
@@ -118,6 +119,7 @@ function App() {
                 <Profile
                   handleCardClick={handleCardClick}
                   clothingItems={clothingItems}
+                  handleAddClick={handleAddClick}
                 />
               }
             />

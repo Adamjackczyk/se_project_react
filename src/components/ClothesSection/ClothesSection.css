@@ -16,6 +16,7 @@
   color: rgba(0, 0, 0, 0.6);
   margin: 35px 0 16px;
   padding: 0;
+  cursor: pointer;
 }
 
 .clothes-section__list {
