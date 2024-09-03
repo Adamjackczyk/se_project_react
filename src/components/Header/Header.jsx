@@ -5,7 +5,7 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 
 function Header({ handleAddClick, weatherData }) {
-  let name = "Terrence Tegegne";
+  const name = "Terrence Tegegne";
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
