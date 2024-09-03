@@ -49,6 +49,7 @@ const AddItemModal = ({ closeModal, onAddItem, isOpen }) => {
       onClose={closeModal}
       isOpen={isOpen}
       onSubmit={handleSubmit}
+      isFormValid={isFormValid}
     >
       <label className="modal__label" htmlFor="name">
         Name
@@ -115,9 +116,6 @@ const AddItemModal = ({ closeModal, onAddItem, isOpen }) => {
           Cold
         </label>
       </fieldset>
-      <button className="modal__submit" type="submit" disabled={!isFormValid()}>
-        Add garment
-      </button>
     </ModalWithForm>
   );
 };
