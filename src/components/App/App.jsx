@@ -10,7 +10,7 @@ import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import { getItems } from "../../utils/API";
+import { getItems, deleteItem, addItem } from "../../utils/API";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -32,33 +32,23 @@ function App() {
           : 0,
     };
 
-    return fetch("http://localhost:3001/items", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newItem),
-    })
-      .then((response) => response.json())
-      .then((createdItem) => {
-        setClothingItems((prevItems) => [...prevItems, createdItem]);
-        closeModal();
-      });
+    return addItem(newItem).then((createdItem) => {
+      setClothingItems((prevItems) => [...prevItems, createdItem]);
+      closeModal();
+    });
   };
+
   const handleDeleteItem = (id) => {
-    fetch(`http://localhost:3001/items/${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (response.ok) {
-          setClothingItems((prevItems) =>
-            prevItems.filter((item) => item._id !== id)
-          );
-          closeModal();
-        }
+    deleteItem(id)
+      .then(() => {
+        setClothingItems((prevItems) =>
+          prevItems.filter((item) => item._id !== id)
+        );
+        closeModal();
       })
       .catch(console.error);
   };
+
   const handleCardClick = (card) => {
     setActiveModal("preview");
     setSelectedCard(card);
@@ -69,8 +59,7 @@ function App() {
   };
 
   const handleToggleSwitchChange = () => {
-    if (currentTempUnit === "F") setCurrentTempUnit("C");
-    if (currentTempUnit === "C") setCurrentTempUnit("F");
+    setCurrentTempUnit((prevUnit) => (prevUnit === "F" ? "C" : "F"));
   };
 
   const closeModal = () => {
