@@ -10,7 +10,7 @@ import Footer from "../Footer/Footer";
 import Main from "../Main/Main";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import { getItems, deleteItem, addItem } from "../../utils/API";
+import { getItems, deleteItem, addItem } from "../../utils/api";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -22,6 +22,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
+  const [error, setError] = useState(null);
 
   const onAddItem = (values) => {
     const newItem = {
@@ -39,6 +40,7 @@ function App() {
       })
       .catch((error) => {
         console.error("Error adding item:", error);
+        setError(error);
       });
   };
 
@@ -52,6 +54,7 @@ function App() {
       })
       .catch((error) => {
         console.error("Error deleting item:", error);
+        setError(error);
       });
   };
 
@@ -78,13 +81,19 @@ function App() {
         const filteredData = filterWeatherData(data);
         setWeatherData(filteredData);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Error fetching weather data:", error);
+        setError(error);
+      });
   }, []);
 
   useEffect(() => {
     getItems()
       .then((data) => setClothingItems(data))
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Error fetching items:", error);
+        setError(error);
+      });
   }, []);
 
   return (
@@ -127,6 +136,9 @@ function App() {
           onClose={closeModal}
           onDelete={handleDeleteItem}
         />
+        {error && (
+          <div className="error-popup">Something went wrong: {error}</div>
+        )}{" "}
       </CurrentTemperatureUnitContext.Provider>
     </div>
   );
