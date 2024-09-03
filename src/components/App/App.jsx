@@ -34,7 +34,7 @@ function App() {
 
     return addItem(newItem)
       .then((createdItem) => {
-        setClothingItems((prevItems) => [...prevItems, createdItem]);
+        setClothingItems((prevItems) => [createdItem, ...prevItems]);
         closeModal();
       })
       .catch((error) => {
