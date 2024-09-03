@@ -27,11 +27,15 @@ const AddItemModal = ({ closeModal, onAddItem, isOpen }) => {
       imageUrl: link,
     };
 
-    onAddItem(values);
-    // Clear the form after submission
-    setName("");
-    setImageUrl("");
-    setWeather("");
+    onAddItem(values)
+      .then(() => {
+        setName("");
+        setImageUrl("");
+        setWeather("");
+      })
+      .catch((error) => {
+        console.error("Error adding item:", error);
+      });
   };
 
   const isFormValid = () => {

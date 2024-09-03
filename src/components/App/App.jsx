@@ -32,7 +32,7 @@ function App() {
           : 0,
     };
 
-    fetch("http://localhost:3001/items", {
+    return fetch("http://localhost:3001/items", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,12 +41,10 @@ function App() {
     })
       .then((response) => response.json())
       .then((createdItem) => {
-        setClothingItems((prevItems) => [...prevItems, createdItem]); // This line adds the new item to the state
+        setClothingItems((prevItems) => [...prevItems, createdItem]);
         closeModal();
-      })
-      .catch(console.error);
+      });
   };
-
   const handleDeleteItem = (id) => {
     fetch(`http://localhost:3001/items/${id}`, {
       method: "DELETE",
