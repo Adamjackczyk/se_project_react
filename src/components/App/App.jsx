@@ -33,15 +33,10 @@ function App() {
           : 0,
     };
 
-    return addItem(newItem)
-      .then((createdItem) => {
-        setClothingItems((prevItems) => [createdItem, ...prevItems]);
-        closeModal();
-      })
-      .catch((error) => {
-        console.error("Error adding item:", error);
-        setError(error);
-      });
+    return addItem(newItem).then((createdItem) => {
+      setClothingItems((prevItems) => [createdItem, ...prevItems]);
+      closeModal();
+    });
   };
 
   const handleDeleteItem = (id) => {

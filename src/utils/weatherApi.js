@@ -1,13 +1,8 @@
+import { request } from "./api";
+
 export const getWeather = ({ latitude, longitude }, APIkey) => {
-  return fetch(
-    `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
-  ).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Error: ${res.status}`);
-    }
-  });
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`;
+  return request(url);
 };
 
 export const filterWeatherData = (data) => {
@@ -19,7 +14,6 @@ export const filterWeatherData = (data) => {
     F: parseFloat(tempF.toFixed(2)),
     C: parseFloat(tempC.toFixed(2)),
   };
-  // result.temp = { F: data.main.temp, C: (data.main.temp - 32) * (5 / 9) };
   result.type = getWeatherType(result.temp.F);
   result.condition = data.weather[0].main.toLowerCase();
   result.isDay = isDay(data.sys, Date.now());
