@@ -24,13 +24,15 @@ function App() {
   const [clothingItems, setClothingItems] = useState([]);
   const [error, setError] = useState(null);
 
+  let nextId =
+    clothingItems.length > 0
+      ? Math.max(...clothingItems.map((item) => item._id)) + 1
+      : 0;
+
   const onAddItem = (values) => {
     const newItem = {
       ...values,
-      _id:
-        clothingItems.length > 0
-          ? clothingItems[clothingItems.length - 1]._id + 1
-          : 0,
+      _id: nextId++,
     };
 
     return addItem(newItem).then((createdItem) => {
