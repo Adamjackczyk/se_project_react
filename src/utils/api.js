@@ -1,16 +1,15 @@
 const baseUrl = "http://localhost:3001";
-// const headers = { "Content-Type": "application/json" };
 
-function getItems() {
+export function getItems() {
   return fetch(`${baseUrl}/items`)
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(response.statusText);
+      throw new Error(`Error fetching items: ${response.statusText}`);
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
       throw error;
     });
 }
@@ -27,10 +26,10 @@ export function addItem(newItem) {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(response.statusText);
+      throw new Error(`Error adding item: ${response.statusText}`);
     })
     .catch((error) => {
-      console.error("Error adding item:", error);
+      console.error(error);
       throw error;
     });
 }
@@ -43,12 +42,10 @@ export function deleteItem(id) {
       if (response.ok) {
         return response.json();
       }
-      throw new Error(response.statusText);
+      throw new Error(`Error deleting item: ${response.statusText}`);
     })
     .catch((error) => {
-      console.error("Error deleting item:", error);
+      console.error(error);
       throw error;
     });
 }
-
-export { getItems };

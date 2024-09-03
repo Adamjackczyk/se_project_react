@@ -32,10 +32,14 @@ function App() {
           : 0,
     };
 
-    return addItem(newItem).then((createdItem) => {
-      setClothingItems((prevItems) => [...prevItems, createdItem]);
-      closeModal();
-    });
+    return addItem(newItem)
+      .then((createdItem) => {
+        setClothingItems((prevItems) => [...prevItems, createdItem]);
+        closeModal();
+      })
+      .catch((error) => {
+        console.error("Error adding item:", error);
+      });
   };
 
   const handleDeleteItem = (id) => {
@@ -46,7 +50,9 @@ function App() {
         );
         closeModal();
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Error deleting item:", error);
+      });
   };
 
   const handleCardClick = (card) => {
