@@ -65,3 +65,25 @@
   text-decoration: none;
   color: black;
 }
+
+.header__signup-btn {
+  margin-left: 20px;
+  font-family: "CabinetGrotesk-Bold";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.header__signin-btn {
+  margin-left: 20px;
+  font-family: "CabinetGrotesk-Bold";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
