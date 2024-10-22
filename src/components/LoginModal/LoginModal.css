@@ -1,6 +1,10 @@
 .login__or-signup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+  position: absolute;
+  bottom: 27px;
+  left: 160px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__title {
+  font-size: 16px;
 }

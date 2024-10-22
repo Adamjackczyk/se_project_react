@@ -66,52 +66,22 @@ const RegisterModal = ({ isOpen, onClose, onRegister }) => {
 
   return (
     <ModalWithForm
-      title="Register"
+      title="Sign Up"
       buttonText="Sign Up"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
     >
-      {/* Name Input Field */}
-      <label className="modal__label" htmlFor="register-name">
-        Name
-        <input
-          type="text"
-          id="register-name"
-          name="name"
-          className="modal__input"
-          placeholder="Your Name"
-          value={name}
-          onChange={handleNameChange}
-          required
-        />
-      </label>
-
-      {/* Avatar URL Input Field */}
-      <label className="modal__label" htmlFor="register-avatar">
-        Avatar URL
-        <input
-          type="url"
-          id="register-avatar"
-          name="avatar"
-          className="modal__input"
-          placeholder="https://example.com/avatar.jpg"
-          value={avatar}
-          onChange={handleAvatarChange}
-          required
-        />
-      </label>
-
       {/* Email Input Field */}
       <label className="modal__label" htmlFor="register-email">
-        Email
+        Email*
         <input
           type="email"
           id="register-email"
           name="email"
           className="modal__input"
-          placeholder="you@example.com"
+          placeholder="Email"
           value={email}
           onChange={handleEmailChange}
           required
@@ -120,18 +90,49 @@ const RegisterModal = ({ isOpen, onClose, onRegister }) => {
 
       {/* Password Input Field */}
       <label className="modal__label" htmlFor="register-password">
-        Password
+        Password*
         <input
           type="password"
           id="register-password"
           name="password"
           className="modal__input"
-          placeholder="********"
+          placeholder="Password"
           value={password}
           onChange={handlePasswordChange}
           required
         />
       </label>
+
+      {/* Name Input Field */}
+      <label className="modal__label" htmlFor="register-name">
+        Name *
+        <input
+          type="text"
+          id="register-name"
+          name="name"
+          className="modal__input"
+          placeholder="Name"
+          value={name}
+          onChange={handleNameChange}
+          required
+        />
+      </label>
+
+      {/* Avatar URL Input Field */}
+      <label className="modal__label" htmlFor="register-avatar">
+        Avatar URL *
+        <input
+          type="url"
+          id="register-avatar"
+          name="avatar"
+          className="modal__input"
+          placeholder="Avatar URL"
+          value={avatar}
+          onChange={handleAvatarChange}
+          required
+        />
+      </label>
+      <p className="signup__or-login">or Log In</p>
     </ModalWithForm>
   );
 };
