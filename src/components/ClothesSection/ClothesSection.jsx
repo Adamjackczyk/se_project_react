@@ -1,32 +1,45 @@
-import { defaultClothingItems } from "../../utils/constants";
+// src/components/ClothesSection/ClothesSection.jsx
+
+import React, { useContext } from "react";
 import ItemCard from "../ItemCard/ItemCard";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./ClothesSection.css";
+
 function ClothesSection({ clothingItems, handleAddClick, handleCardClick }) {
-  const defaultClothingItems = clothingItems || [];
+  const currentUser = useContext(CurrentUserContext);
+
+  // Filter clothing items to include only those owned by the current user
+  const userClothingItems = clothingItems.filter(
+    (item) => item.owner === (currentUser ? currentUser._id : null)
+  );
+
   return (
     <div className="clothes-section">
       <div className="clothes-section__header">
         <p className="clothes-section__text">Your items</p>
         <button
           type="button"
-          onClick={() => {
-            handleAddClick();
-          }}
+          onClick={handleAddClick}
           className="clothes-section__button"
+          aria-label="Add new clothing item"
         >
           + Add New
         </button>
       </div>
       <ul className="clothes-section__list">
-        {defaultClothingItems.map((item) => {
-          return (
+        {userClothingItems.length > 0 ? (
+          userClothingItems.map((item) => (
             <ItemCard
               key={item._id}
               item={item}
               onCardClick={handleCardClick}
             />
-          );
-        })}
+          ))
+        ) : (
+          <p className="clothes-section__no-items">
+            You have no clothing items yet.
+          </p>
+        )}
       </ul>
     </div>
   );

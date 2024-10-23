@@ -23,6 +23,7 @@ import {
   removeCardLike,
 } from "../../utils/api";
 import { signup, signin, getCurrentUser } from "../../utils/auth"; // Import signup and signin functions
+import CurrentUserContext from "../../contexts/CurrentUserContext"; // Import CurrentUserContext
 
 function App() {
   // State variables for weather data and modals
@@ -45,11 +46,6 @@ function App() {
 
   const navigate = useNavigate(); // For programmatic navigation
 
-  let nextId =
-    clothingItems.length > 0
-      ? Math.max(...clothingItems.map((item) => item._id)) + 1
-      : 0;
-
   /**
    * Handles adding a new clothing item.
    *
@@ -58,18 +54,15 @@ function App() {
    */
   const onAddItem = (values) => {
     const token = localStorage.getItem("jwt"); // Retrieve JWT token from localStorage
-    const newItem = {
-      ...values,
-      _id: nextId++,
-    };
 
-    return addItem(newItem, token)
+    return addItem(values, token)
       .then((createdItem) => {
         setClothingItems((prevItems) => [createdItem, ...prevItems]);
         closeModal();
       })
       .catch((error) => {
         console.error("Error adding item:", error);
+        setError(error);
       });
   };
 
@@ -162,6 +155,7 @@ function App() {
       })
       .then((userData) => {
         setCurrentUser(userData);
+        closeModal(); // Close the modal after successful login
       })
       .catch((error) => {
         console.error("Login Error:", error);
@@ -259,8 +253,9 @@ function App() {
   }, []);
 
   return (
-    <div className="page">
-      {/* Provide current temperature unit and toggle function via context */}
+    // Wrap the entire application with CurrentUserContext.Provider
+    <CurrentUserContext.Provider value={currentUser}>
+      {/* Provide current temperature unit and toggle function via CurrentTemperatureUnitContext */}
       <CurrentTemperatureUnitContext.Provider
         value={{
           currentTempUnit,
@@ -269,73 +264,80 @@ function App() {
           currentUser,
         }}
       >
-        <div className="page__content">
-          {/* Header with handlers for adding items and authentication modals */}
-          <Header
-            handleAddClick={handleAddClick}
-            weatherData={weatherData}
-            onRegister={() => setIsRegisterModalOpen(true)} // Open RegisterModal
-            onLogin={() => setIsLoginModalOpen(true)} // Open LoginModal
-          />
-          <Routes>
-            {/* Main Page Route */}
-            <Route
-              path="/"
-              element={
-                <Main
-                  weatherData={weatherData}
-                  handleCardClick={handleCardClick}
-                  clothingItems={clothingItems}
-                  onCardLike={handleCardLike} // Pass like handler
-                />
-              }
+        <div className="page">
+          <div className="page__content">
+            {/* Header with handlers for adding items and authentication modals */}
+            <Header
+              handleAddClick={handleAddClick}
+              weatherData={weatherData}
+              onRegister={() => setIsRegisterModalOpen(true)} // Open RegisterModal
+              onLogin={() => setIsLoginModalOpen(true)} // Open LoginModal
             />
-            {/* Protected Profile Page Route */}
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile
+            <Routes>
+              {/* Main Page Route */}
+              <Route
+                path="/"
+                element={
+                  <Main
+                    weatherData={weatherData}
                     handleCardClick={handleCardClick}
                     clothingItems={clothingItems}
-                    handleAddClick={handleAddClick}
                     onCardLike={handleCardLike} // Pass like handler
                   />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-          <Footer />
+                }
+              />
+              {/* Protected Profile Page Route */}
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile
+                      handleCardClick={handleCardClick}
+                      clothingItems={clothingItems}
+                      handleAddClick={handleAddClick}
+                      onCardLike={handleCardLike} // Pass like handler
+                      onLogout={handleLogout} // Pass logout handler
+                    />
+                  </ProtectedRoute>
+                }
+              />
+              {/* Add a catch-all route for 404 Not Found */}
+              <Route path="*" element={<div>404 Not Found</div>} />
+            </Routes>
+            <Footer />
+          </div>
+          {/* AddItemModal for adding new clothing items */}
+          <AddItemModal
+            isOpen={activeModal === "add-garment"}
+            onClose={closeModal}
+            onAddItem={onAddItem}
+          />
+          {/* ItemModal for viewing item details */}
+          <ItemModal
+            activeModal={activeModal}
+            card={selectedCard}
+            onClose={closeModal}
+            onDelete={handleDeleteItem}
+          />
+          {/* RegisterModal for user registration */}
+          <RegisterModal
+            isOpen={isRegisterModalOpen}
+            onClose={closeModal}
+            onRegister={handleRegister}
+          />
+          {/* LoginModal for user login */}
+          <LoginModal
+            isOpen={isLoginModalOpen}
+            onClose={closeModal}
+            onLogin={handleLogin}
+          />
+          {/* Display error messages if any */}
+          {error && (
+            <div className="error-popup">Something went wrong: {error}</div>
+          )}
         </div>
-        {/* AddItemModal for adding new clothing items */}
-        <AddItemModal
-          {...{ closeModal, onAddItem, isOpen: activeModal === "add-garment" }}
-        />
-        {/* ItemModal for viewing item details */}
-        <ItemModal
-          activeModal={activeModal}
-          card={selectedCard}
-          onClose={closeModal}
-          onDelete={handleDeleteItem}
-        />
-        {/* RegisterModal for user registration */}
-        <RegisterModal
-          isOpen={isRegisterModalOpen}
-          onClose={closeModal}
-          onRegister={handleRegister}
-        />
-        {/* LoginModal for user login */}
-        <LoginModal
-          isOpen={isLoginModalOpen}
-          onClose={closeModal}
-          onLogin={handleLogin}
-        />
-        {/* Display error messages if any */}
-        {error && (
-          <div className="error-popup">Something went wrong: {error}</div>
-        )}
       </CurrentTemperatureUnitContext.Provider>
-    </div>
+    </CurrentUserContext.Provider>
   );
 }
 

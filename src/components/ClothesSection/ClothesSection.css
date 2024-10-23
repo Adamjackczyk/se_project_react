@@ -1,3 +1,7 @@
+.clothes-section {
+  padding: 20px;
+}
+
 .clothes-section__header {
   display: flex;
   flex-wrap: wrap;
@@ -19,6 +23,10 @@
   cursor: pointer;
 }
 
+.clothes-section__button:hover {
+  background-color: #45a049;
+}
+
 .clothes-section__list {
   display: flex;
   flex-wrap: wrap;
@@ -26,4 +34,9 @@
   padding: 0;
   list-style-type: none;
   gap: 20px;
+}
+
+.clothes-section__no-items {
+  font-size: 18px;
+  color: #555;
 }

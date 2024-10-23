@@ -1,15 +1,9 @@
-.modal {
-}
-
 .modal__content_type_image {
   padding: 0;
 }
 
 .modal__content.modal__content_type_image {
   padding: 0;
-}
-
-.modal__content {
 }
 
 .modal__image {
@@ -49,4 +43,25 @@
   margin: 0;
   font-size: 20px;
   line-height: 20px;
+}
+
+.item__delete-button {
+  background: transparent;
+  border: none;
+  color: #ff4d4d; /* Red color for delete action */
+  font-size: 16px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.item__delete-button:hover {
+  color: #ff1a1a; /* Darker red on hover */
+}
+
+.item__delete-button_hidden {
+  display: none;
+}
+
+.item__delete-button_visible {
+  display: block;
 }

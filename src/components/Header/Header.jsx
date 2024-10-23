@@ -2,10 +2,11 @@
 
 import "./Header.css";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.svg";
+import avatarPlaceholder from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import React, { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 /**
@@ -20,11 +21,19 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
  * - onLogin (function): Function to open the LoginModal.
  */
 function Header({ handleAddClick, weatherData, onRegister, onLogin }) {
-  const { isLoggedIn, currentUser } = useContext(CurrentTemperatureUnitContext);
+  // Consume currentUser from CurrentUserContext
+  const currentUser = useContext(CurrentUserContext);
 
+  // Consume isLoggedIn from CurrentTemperatureUnitContext
+  const { isLoggedIn } = useContext(CurrentTemperatureUnitContext);
+
+  // Determine user's name and avatar
   const name = currentUser ? currentUser.name : "Guest";
   const userAvatar =
-    currentUser && currentUser.avatar ? currentUser.avatar : avatar;
+    currentUser && currentUser.avatar ? currentUser.avatar : avatarPlaceholder;
+
+  // Extract the first letter of the user's name for the avatar placeholder
+  const avatarInitial = name.charAt(0).toUpperCase();
 
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
@@ -62,22 +71,37 @@ function Header({ handleAddClick, weatherData, onRegister, onLogin }) {
           </>
         )}
         {isLoggedIn && (
-          <Link to="/profile" className="header__profile-link">
-            <div className="header__user-container">
-              <button
-                onClick={handleAddClick}
-                type="button"
-                className="header__add-clothes-btn"
-              >
-                + Add clothes
-              </button>
-              <p className="header__username">{name}</p>
-              <img src={userAvatar} alt={name} className="header__avatar" />
-            </div>
-          </Link>
+          <>
+            <button
+              onClick={handleAddClick}
+              type="button"
+              className="header__add-clothes-btn"
+              aria-label="Add a new clothing item"
+            >
+              + Add clothes
+            </button>
+            <Link to="/profile" className="header__profile-link">
+              <div className="header__user-container">
+                <p className="header__username">{name}</p>
+                {/* User Avatar */}
+                {currentUser && currentUser.avatar ? (
+                  <img
+                    src={currentUser.avatar}
+                    alt={`${name}'s avatar`}
+                    className="header__avatar"
+                  />
+                ) : (
+                  <div className="header__avatar-placeholder">
+                    {avatarInitial}
+                  </div>
+                )}
+              </div>
+            </Link>
+          </>
         )}
       </div>
     </header>
   );
 }
+
 export default Header;
