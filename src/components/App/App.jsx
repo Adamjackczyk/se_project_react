@@ -61,7 +61,12 @@ function App() {
 
     return addItem(values, token)
       .then((createdItem) => {
+        console.log("Created Item:", createdItem); // Debugging line
         setClothingItems((prevItems) => [createdItem, ...prevItems]);
+        console.log("Updated Clothing Items State:", [
+          createdItem,
+          ...clothingItems,
+        ]);
         closeModal();
       })
       .catch((error) => {
@@ -203,6 +208,7 @@ function App() {
       // Verify the token and fetch user data
       getCurrentUser(token)
         .then((userData) => {
+          console.log("Fetched Current User:", userData);
           setCurrentUser(userData);
           setIsLoggedIn(true);
         })
