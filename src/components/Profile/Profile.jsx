@@ -12,6 +12,7 @@ function Profile({
   clothingItems,
   handleAddClick,
   onUpdateProfile,
+  onCardLike,
 }) {
   // State to manage the visibility of the EditProfileModal
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
@@ -38,6 +39,7 @@ function Profile({
           handleCardClick={handleCardClick}
           clothingItems={clothingItems}
           handleAddClick={handleAddClick}
+          onCardLike={onCardLike}
         />
       </section>
 

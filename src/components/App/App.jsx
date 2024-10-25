@@ -226,7 +226,9 @@ function App() {
    *
    * @param {object} item - The clothing item data.
    */
-  const handleCardLike = ({ _id, isLiked }) => {
+  // src/components/App/App.jsx
+
+  const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt"); // Retrieve JWT token from localStorage
     if (!token) {
       console.error("No JWT token found. User might not be logged in.");
@@ -235,19 +237,19 @@ function App() {
 
     if (!isLiked) {
       // If the item is not liked, send a request to like it
-      addCardLike(_id, token)
+      addCardLike(id, token)
         .then((updatedCard) => {
           setClothingItems((cards) =>
-            cards.map((item) => (item._id === _id ? updatedCard : item))
+            cards.map((item) => (item._id === id ? updatedCard : item))
           );
         })
         .catch((err) => console.log(err));
     } else {
       // If the item is already liked, send a request to unlike it
-      removeCardLike(_id, token)
+      removeCardLike(id, token)
         .then((updatedCard) => {
           setClothingItems((cards) =>
-            cards.map((item) => (item._id === _id ? updatedCard : item))
+            cards.map((item) => (item._id === id ? updatedCard : item))
           );
         })
         .catch((err) => console.log(err));
@@ -332,6 +334,7 @@ function App() {
                       handleAddClick={handleAddClick}
                       onUpdateProfile={handleUpdateProfile}
                       onLogout={handleLogout}
+                      onCardLike={handleCardLike}
                     />
                   </ProtectedRoute>
                 }

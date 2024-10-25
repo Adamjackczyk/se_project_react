@@ -5,7 +5,12 @@ import ItemCard from "../ItemCard/ItemCard";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./ClothesSection.css";
 
-function ClothesSection({ clothingItems, handleAddClick, handleCardClick }) {
+function ClothesSection({
+  clothingItems,
+  handleAddClick,
+  handleCardClick,
+  onCardLike,
+}) {
   const currentUser = useContext(CurrentUserContext);
   console.log("Current User ID:", currentUser?._id); // Debugging line
   console.log("Clothing Items:", clothingItems); // Debugging line
@@ -45,6 +50,7 @@ function ClothesSection({ clothingItems, handleAddClick, handleCardClick }) {
               key={item._id}
               item={item}
               onCardClick={handleCardClick}
+              onCardLike={onCardLike}
             />
           ))
         ) : (
