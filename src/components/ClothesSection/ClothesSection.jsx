@@ -7,11 +7,23 @@ import "./ClothesSection.css";
 
 function ClothesSection({ clothingItems, handleAddClick, handleCardClick }) {
   const currentUser = useContext(CurrentUserContext);
+  console.log("Current User ID:", currentUser?._id); // Debugging line
+  console.log("Clothing Items:", clothingItems); // Debugging line
 
-  // Filter clothing items to include only those owned by the current user
+  // Additional logging to inspect ownership
+  clothingItems.forEach((item, index) => {
+    console.log(
+      `Item ${index + 1} Owner ID:`,
+      item.owner ? item.owner._id : "No Owner"
+    );
+  });
+
+  // Corrected filtering logic
   const userClothingItems = clothingItems.filter(
-    (item) => item.owner === (currentUser ? currentUser._id : null)
+    (item) => item.owner && item.owner._id === currentUser._id
   );
+
+  console.log("Filtered User Clothing Items:", userClothingItems);
 
   return (
     <div className="clothes-section">

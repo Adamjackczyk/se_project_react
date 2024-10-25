@@ -1,38 +1,21 @@
 // src/components/Header/Header.jsx
 
+import React, { useContext } from "react";
 import "./Header.css";
 import logo from "../../assets/logo.svg";
 import avatarPlaceholder from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
-import React, { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
-/**
- * Header Component
- *
- * Renders the application's header with navigation and authentication controls.
- *
- * Props:
- * - handleAddClick (function): Function to open the AddItemModal.
- * - weatherData (object): Data about the current weather.
- * - onRegister (function): Function to open the RegisterModal.
- * - onLogin (function): Function to open the LoginModal.
- */
 function Header({ handleAddClick, weatherData, onRegister, onLogin }) {
-  // Consume currentUser from CurrentUserContext
   const currentUser = useContext(CurrentUserContext);
-
-  // Consume isLoggedIn from CurrentTemperatureUnitContext
   const { isLoggedIn } = useContext(CurrentTemperatureUnitContext);
 
-  // Determine user's name and avatar
   const name = currentUser ? currentUser.name : "Guest";
   const userAvatar =
     currentUser && currentUser.avatar ? currentUser.avatar : avatarPlaceholder;
-
-  // Extract the first letter of the user's name for the avatar placeholder
   const avatarInitial = name.charAt(0).toUpperCase();
 
   const currentDate = new Date().toLocaleString("default", {

@@ -24,6 +24,7 @@ import {
 } from "../../utils/api";
 import { signup, signin, getCurrentUser } from "../../utils/auth"; // Import signup and signin functions
 import CurrentUserContext from "../../contexts/CurrentUserContext"; // Import CurrentUserContext
+import EditProfileModal from "../EditProfileModal/EditProfileModal"; // Import EditProfileModal
 
 function App() {
   // State variables for weather data and modals
@@ -43,6 +44,9 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null); // Stores current user data
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false); // Controls RegisterModal visibility
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Controls LoginModal visibility
+  const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
+  const openEditProfileModal = () => setIsEditProfileModalOpen(true);
+  const closeEditProfileModal = () => setIsEditProfileModalOpen(false);
 
   const navigate = useNavigate(); // For programmatic navigation
 
@@ -161,6 +165,31 @@ function App() {
         console.error("Login Error:", error);
         // Optionally, set error state to display error messages to the user
         throw error; // Re-throw to allow further handling if needed
+      });
+  };
+
+  // Handler to update user profile
+  const handleUpdateProfile = ({ name, avatar }) => {
+    const token = localStorage.getItem("jwt"); // Retrieve JWT token from localStorage
+
+    return fetch("http://localhost:3001/users/me", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Include JWT token in headers
+      },
+      body: JSON.stringify({ name, avatar }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((err) => Promise.reject(err));
+        }
+        return res.json();
+      })
+      .then((updatedUser) => {
+        setCurrentUser(updatedUser);
+        console.log("Updated User:", updatedUser); // Debugging line
+        return updatedUser;
       });
   };
 
@@ -295,8 +324,8 @@ function App() {
                       handleCardClick={handleCardClick}
                       clothingItems={clothingItems}
                       handleAddClick={handleAddClick}
-                      onCardLike={handleCardLike} // Pass like handler
-                      onLogout={handleLogout} // Pass logout handler
+                      onUpdateProfile={handleUpdateProfile}
+                      onLogout={handleLogout}
                     />
                   </ProtectedRoute>
                 }
