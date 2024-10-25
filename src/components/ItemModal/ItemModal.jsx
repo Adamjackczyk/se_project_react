@@ -24,7 +24,8 @@ function ItemModal({ activeModal, onClose, card, onDelete }) {
   }
 
   // Checking if the current user is the owner of the current clothing item
-  const isOwn = card.owner === (currentUser ? currentUser._id : null);
+  const isOwn =
+    card.owner && card.owner._id === (currentUser ? currentUser._id : null);
 
   // Creating a variable which you'll then set in `className` for the delete button
   const itemDeleteButtonClassName = `item__delete-button ${
