@@ -1,5 +1,3 @@
-// src/contexts/CurrentTemperatureUnitContext.js
-
 import React from "react";
 
 /**

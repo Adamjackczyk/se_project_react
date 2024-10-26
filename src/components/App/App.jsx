@@ -208,7 +208,6 @@ function App() {
       // Verify the token and fetch user data
       getCurrentUser(token)
         .then((userData) => {
-          console.log("Fetched Current User:", userData);
           setCurrentUser(userData);
           setIsLoggedIn(true);
         })
