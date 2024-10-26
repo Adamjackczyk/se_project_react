@@ -18,32 +18,28 @@
   background-color: #fff;
 }
 
-.card__name {
+.card__header {
   position: absolute;
-  top: 15px;
+  display: flex;
+  padding: 10px 16px;
+  gap: 10px;
+}
+
+.card__name {
   margin: 0;
-  padding: 2px 12px;
-  background-color: #fff;
-  border-radius: 4px;
   font-family: "CabinetGrotesk-Bold";
   font-weight: 700;
   font-size: 16px;
-  line-height: 20px;
-  z-index: 0;
-}
-
-.card__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
-  cursor: pointer;
+  padding-right: 12px;
+  padding-left: 12px;
+  line-height: 24px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.6);
+  border-radius: 2px;
+  flex-grow: 1;
 }
 
 .card__like-button {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
   background: none;
   border: none;
   cursor: pointer;
@@ -58,10 +54,10 @@
   height: 24px;
 }
 
-.card__like-button_liked img {
-  /* Additional styles if needed for liked state */
-}
-
-.card__like-button_unliked img {
-  /* Additional styles if needed for unliked state */
+.card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0 0 20px 20px;
+  cursor: pointer;
 }

@@ -32,14 +32,14 @@ function Profile({
           className="profile__edit-button"
           onClick={openEditProfileModal}
         >
-          Edit Profile
+          Change profile data
         </button>
         <button
           type="button"
           className="profile__signout-button"
           onClick={onLogout}
         >
-          Sign out
+          Log out
         </button>
       </section>
       <section className="profile__clothing-items">

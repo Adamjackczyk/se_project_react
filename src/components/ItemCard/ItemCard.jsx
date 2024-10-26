@@ -30,20 +30,23 @@ function ItemCard({ item, onCardClick, onCardLike }) {
 
   return (
     <li className="card">
-      <h2 className="card__name">{item.name}</h2>
+      {/* New Header Div to group Name and Like Button */}
+      <div className="card__header">
+        <h2 className="card__name">{item.name}</h2>
+        <button
+          className={likeButtonClassName}
+          onClick={handleLike}
+          aria-label={isLiked ? "Unlike this item" : "Like this item"}
+        >
+          <img src={likeIcon} alt={isLiked ? "Liked" : "Not liked"} />
+        </button>
+      </div>
       <img
         onClick={handleCardClickInternal}
         className="card__image"
         src={item.imageUrl}
         alt={item.name}
       />
-      <button
-        className={likeButtonClassName}
-        onClick={handleLike}
-        aria-label={isLiked ? "Unlike this item" : "Like this item"}
-      >
-        <img src={likeIcon} alt={isLiked ? "Liked" : "Not liked"} />
-      </button>
     </li>
   );
 }

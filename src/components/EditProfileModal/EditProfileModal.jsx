@@ -76,8 +76,8 @@ const EditProfileModal = ({ isOpen, onClose, onUpdateProfile }) => {
 
   return (
     <ModalWithForm
-      title="Edit Profile"
-      buttonText="Save"
+      title="Change profile data"
+      buttonText="Save changes"
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -85,7 +85,7 @@ const EditProfileModal = ({ isOpen, onClose, onUpdateProfile }) => {
     >
       {/* Name Input Field */}
       <label className="modal__label" htmlFor="edit-profile-name">
-        Name
+        Name *
         <input
           type="text"
           id="edit-profile-name"
@@ -100,7 +100,7 @@ const EditProfileModal = ({ isOpen, onClose, onUpdateProfile }) => {
 
       {/* Avatar URL Input Field */}
       <label className="modal__label" htmlFor="edit-profile-avatar">
-        Avatar URL
+        Avatar *
         <input
           type="url"
           id="edit-profile-avatar"
