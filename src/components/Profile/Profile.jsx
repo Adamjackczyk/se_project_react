@@ -13,6 +13,7 @@ function Profile({
   handleAddClick,
   onUpdateProfile,
   onCardLike,
+  onLogout,
 }) {
   // State to manage the visibility of the EditProfileModal
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false);
@@ -32,6 +33,13 @@ function Profile({
           onClick={openEditProfileModal}
         >
           Edit Profile
+        </button>
+        <button
+          type="button"
+          className="profile__signout-button"
+          onClick={onLogout}
+        >
+          Sign out
         </button>
       </section>
       <section className="profile__clothing-items">
