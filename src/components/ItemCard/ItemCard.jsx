@@ -6,46 +6,74 @@ import unlikedIcon from "../../assets/unliked.svg";
 import React, { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
+/**
+ * ItemCard Component
+ *
+ * Renders a card displaying a clothing item with like functionality.
+ *
+ * Props:
+ * - item (object): The clothing item data.
+ * - onCardClick (function): Function to handle clicking on the item image.
+ * - onCardLike (function): Function to handle liking/unliking the item.
+ */
 function ItemCard({ item, onCardClick, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
 
-  // Check if the current user has liked the item
-  const isLiked = item.likes.some((user) => user._id === currentUser?._id);
+  // Determine if the current user has liked the item
+  const isLiked = currentUser
+    ? item.likes.some((user) => user._id === currentUser._id)
+    : false;
 
   // Determine which like icon to show
-  const likeIcon = isLiked ? likedIcon : unlikedIcon;
+  const likeIconSrc = isLiked ? likedIcon : unlikedIcon;
 
-  // Like button class
+  // Like button CSS class based on like state
   const likeButtonClassName = `card__like-button ${
     isLiked ? "card__like-button_liked" : "card__like-button_unliked"
   }`;
 
-  const handleLike = () => {
-    onCardLike({ id: item._id, isLiked });
+  /**
+   * Handles the like/unlike action.
+   */
+  const handleLikeClick = () => {
+    if (currentUser) {
+      onCardLike({ id: item._id, isLiked });
+    } else {
+      // Optionally, you can prompt the user to log in
+      console.warn("User is not logged in. Cannot like items.");
+    }
   };
 
-  const handleCardClickInternal = () => {
+  /**
+   * Handles clicking on the item image to view details.
+   */
+  const handleImageClick = () => {
     onCardClick(item);
   };
 
   return (
     <li className="card">
-      {/* New Header Div to group Name and Like Button */}
+      {/* Card Header: Item Name and Like Button */}
       <div className="card__header">
         <h2 className="card__name">{item.name}</h2>
-        <button
-          className={likeButtonClassName}
-          onClick={handleLike}
-          aria-label={isLiked ? "Unlike this item" : "Like this item"}
-        >
-          <img src={likeIcon} alt={isLiked ? "Liked" : "Not liked"} />
-        </button>
+        {/* Conditionally render the like button only if the user is logged in */}
+        {currentUser && (
+          <button
+            className={likeButtonClassName}
+            onClick={handleLikeClick}
+            aria-label={isLiked ? "Unlike this item" : "Like this item"}
+          >
+            <img src={likeIconSrc} alt={isLiked ? "Liked" : "Not liked"} />
+          </button>
+        )}
       </div>
+
+      {/* Item Image */}
       <img
-        onClick={handleCardClickInternal}
-        className="card__image"
         src={item.imageUrl}
         alt={item.name}
+        className="card__image"
+        onClick={handleImageClick}
       />
     </li>
   );
