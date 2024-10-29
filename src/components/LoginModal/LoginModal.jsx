@@ -14,7 +14,7 @@ import "./LoginModal.css";
  * - onClose (function): Function to close the modal.
  * - onLogin (function): Function to handle user login.
  */
-const LoginModal = ({ isOpen, onClose, onLogin }) => {
+const LoginModal = ({ isOpen, onClose, onLogin, onSwitchToRegister }) => {
   // State variables to manage form inputs
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -91,7 +91,17 @@ const LoginModal = ({ isOpen, onClose, onLogin }) => {
           required
         />
       </label>
-      <p className="login__or-signup">or Sign Up</p>
+      {/* Toggle Button to Switch to Register Modal */}
+      <button
+        type="button"
+        className="modal__toggle-button"
+        onClick={() => {
+          onClose();
+          onSwitchToRegister();
+        }}
+      >
+        or Sign Up
+      </button>
     </ModalWithForm>
   );
 };

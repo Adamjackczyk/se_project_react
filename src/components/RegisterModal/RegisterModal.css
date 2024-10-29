@@ -1,6 +1,9 @@
-.signup__or-login {
+.modal__toggle-button {
   position: absolute;
-  bottom: 27px;
-  left: 165px;
+  bottom: 42px;
+  left: 155px;
   color: rgba(0, 0, 0, 0.5);
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }

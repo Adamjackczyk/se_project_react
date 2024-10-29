@@ -3,6 +3,7 @@
   bottom: 27px;
   left: 160px;
   color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 }
 
 .modal__title {

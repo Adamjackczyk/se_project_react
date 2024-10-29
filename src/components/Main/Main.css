@@ -3,9 +3,6 @@
   src: url(../../vendor/fonts/CabinetGrotesk-Bold.woff);
 }
 
-.cards {
-}
-
 .cards__text {
   margin: 40px 0 34px;
   font-family: "CabinetGrotesk-Bold";

@@ -47,6 +47,10 @@ function App() {
   const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
   const openEditProfileModal = () => setIsEditProfileModalOpen(true);
   const closeEditProfileModal = () => setIsEditProfileModalOpen(false);
+  const openRegisterModal = () => setIsRegisterModalOpen(true);
+  const closeRegisterModal = () => setIsRegisterModalOpen(false);
+  const openLoginModal = () => setIsLoginModalOpen(true);
+  const closeLoginModal = () => setIsLoginModalOpen(false);
 
   const navigate = useNavigate(); // For programmatic navigation
 
@@ -361,12 +365,20 @@ function App() {
             isOpen={isRegisterModalOpen}
             onClose={closeModal}
             onRegister={handleRegister}
+            onSwitchToLogin={() => {
+              closeRegisterModal();
+              openLoginModal();
+            }}
           />
           {/* LoginModal for user login */}
           <LoginModal
             isOpen={isLoginModalOpen}
             onClose={closeModal}
             onLogin={handleLogin}
+            onSwitchToRegister={() => {
+              closeLoginModal();
+              openRegisterModal();
+            }}
           />
           {/* Display error messages if any */}
           {error && (
