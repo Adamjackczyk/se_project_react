@@ -26,7 +26,6 @@ import {
 import { signup, signin, getCurrentUser } from "../../utils/auth"; // Import signup and signin functions
 import CurrentUserContext from "../../contexts/CurrentUserContext"; // Import CurrentUserContext
 import EditProfileModal from "../EditProfileModal/EditProfileModal"; // Import EditProfileModal
-import { request } from "../../utils/api";
 
 function App() {
   // State variables for weather data and modals
@@ -35,7 +34,7 @@ function App() {
     temp: { F: 999 },
     city: "",
   });
-  const [activeModal, setActiveModal] = useState("");
+  const [activeModal, setActiveModal] = useState(""); // Centralized modal state
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTempUnit, setCurrentTempUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
@@ -44,17 +43,20 @@ function App() {
   // Authentication-related state variables
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Tracks if the user is logged in
   const [currentUser, setCurrentUser] = useState(null); // Stores current user data
-  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false); // Controls RegisterModal visibility
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // Controls LoginModal visibility
-  const [isEditProfileModalOpen, setIsEditProfileModalOpen] = useState(false);
-  const openEditProfileModal = () => setIsEditProfileModalOpen(true);
-  const closeEditProfileModal = () => setIsEditProfileModalOpen(false);
-  const openRegisterModal = () => setIsRegisterModalOpen(true);
-  const closeRegisterModal = () => setIsRegisterModalOpen(false);
-  const openLoginModal = () => setIsLoginModalOpen(true);
-  const closeLoginModal = () => setIsLoginModalOpen(false);
 
   const navigate = useNavigate(); // For programmatic navigation
+
+  /**
+   * Opens a specific modal based on the identifier.
+   *
+   * @param {string} modalName - The name of the modal to open.
+   */
+  const openModal = (modalName) => setActiveModal(modalName);
+
+  /**
+   * Closes any open modal.
+   */
+  const closeModal = () => setActiveModal("");
 
   /**
    * Handles adding a new clothing item.
@@ -107,15 +109,8 @@ function App() {
    * @param {object} card - The clothing item data.
    */
   const handleCardClick = (card) => {
-    setActiveModal("preview");
     setSelectedCard(card);
-  };
-
-  /**
-   * Handles clicking the "Add" button to open the AddItemModal.
-   */
-  const handleAddClick = () => {
-    setActiveModal("add-garment");
+    openModal("preview");
   };
 
   /**
@@ -123,15 +118,6 @@ function App() {
    */
   const handleToggleSwitchChange = () => {
     setCurrentTempUnit((prevUnit) => (prevUnit === "F" ? "C" : "F"));
-  };
-
-  /**
-   * Closes any open modal.
-   */
-  const closeModal = () => {
-    setActiveModal("");
-    setIsRegisterModalOpen(false);
-    setIsLoginModalOpen(false);
   };
 
   /**
@@ -148,8 +134,7 @@ function App() {
       })
       .catch((error) => {
         console.error("Registration Error:", error);
-        // Optionally, set error state to display error messages to the user
-        throw error; // Re-throw to allow further handling if needed
+        throw error;
       });
   };
 
@@ -174,8 +159,7 @@ function App() {
       })
       .catch((error) => {
         console.error("Login Error:", error);
-        // Optionally, set error state to display error messages to the user
-        throw error; // Re-throw to allow further handling if needed
+        throw error;
       });
   };
 
@@ -189,6 +173,7 @@ function App() {
     return updateUserProfile({ name, avatar })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
+        closeModal(); // Close the modal after successful update
         return updatedUser;
       })
       .catch((error) => {
@@ -301,10 +286,10 @@ function App() {
           <div className="page__content">
             {/* Header with handlers for adding items and authentication modals */}
             <Header
-              handleAddClick={handleAddClick}
+              handleAddClick={() => openModal("addItem")}
               weatherData={weatherData}
-              onRegister={() => setIsRegisterModalOpen(true)} // Open RegisterModal
-              onLogin={() => setIsLoginModalOpen(true)} // Open LoginModal
+              onRegister={() => openModal("register")}
+              onLogin={() => openModal("login")}
             />
             <Routes>
               {/* Main Page Route */}
@@ -327,10 +312,11 @@ function App() {
                     <Profile
                       handleCardClick={handleCardClick}
                       clothingItems={clothingItems}
-                      handleAddClick={handleAddClick}
+                      handleAddClick={() => openModal("addItem")}
                       onUpdateProfile={handleUpdateProfile}
                       onLogout={handleLogout}
                       onCardLike={handleCardLike}
+                      onEditProfile={() => openModal("editProfile")}
                     />
                   </ProtectedRoute>
                 }
@@ -340,42 +326,57 @@ function App() {
             </Routes>
             <Footer />
           </div>
-          {/* AddItemModal for adding new clothing items */}
-          <AddItemModal
-            isOpen={activeModal === "add-garment"}
-            onClose={closeModal}
-            onAddItem={onAddItem}
-          />
-          {/* ItemModal for viewing item details */}
-          <ItemModal
-            activeModal={activeModal}
-            card={selectedCard}
-            onClose={closeModal}
-            onDelete={handleDeleteItem}
-          />
-          {/* RegisterModal for user registration */}
-          <RegisterModal
-            isOpen={isRegisterModalOpen}
-            onClose={closeModal}
-            onRegister={handleRegister}
-            onSwitchToLogin={() => {
-              closeRegisterModal();
-              openLoginModal();
-            }}
-          />
-          {/* LoginModal for user login */}
-          <LoginModal
-            isOpen={isLoginModalOpen}
-            onClose={closeModal}
-            onLogin={handleLogin}
-            onSwitchToRegister={() => {
-              closeLoginModal();
-              openRegisterModal();
-            }}
-          />
+
+          {/* Render Modals Based on activeModal */}
+          {activeModal === "register" && (
+            <RegisterModal
+              isOpen={activeModal === "register"}
+              onClose={closeModal}
+              onRegister={handleRegister}
+              onSwitchToLogin={() => openModal("login")}
+            />
+          )}
+
+          {activeModal === "login" && (
+            <LoginModal
+              isOpen={activeModal === "login"}
+              onClose={closeModal}
+              onLogin={handleLogin}
+              onSwitchToRegister={() => openModal("register")}
+            />
+          )}
+
+          {activeModal === "addItem" && (
+            <AddItemModal
+              isOpen={activeModal === "addItem"}
+              onClose={closeModal}
+              onAddItem={onAddItem}
+            />
+          )}
+
+          {activeModal === "editProfile" && (
+            <EditProfileModal
+              isOpen={activeModal === "editProfile"}
+              onClose={closeModal}
+              onUpdateProfile={handleUpdateProfile}
+            />
+          )}
+
+          {activeModal === "preview" && (
+            <ItemModal
+              activeModal={activeModal}
+              card={selectedCard}
+              onClose={closeModal}
+              onDelete={handleDeleteItem}
+            />
+          )}
+
           {/* Display error messages if any */}
           {error && (
-            <div className="error-popup">Something went wrong: {error}</div>
+            <div className="error-popup">
+              <p>{error}</p>
+              <button onClick={() => setError(null)}>Close</button>
+            </div>
           )}
         </div>
       </CurrentTemperatureUnitContext.Provider>
