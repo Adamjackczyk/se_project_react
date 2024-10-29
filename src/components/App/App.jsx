@@ -229,8 +229,6 @@ function App() {
    *
    * @param {object} item - The clothing item data.
    */
-  // src/components/App/App.jsx
-
   const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt"); // Retrieve JWT token from localStorage
     if (!token) {
@@ -301,7 +299,6 @@ function App() {
           currentTempUnit,
           handleToggleSwitchChange,
           isLoggedIn,
-          currentUser,
         }}
       >
         <div className="page">
