@@ -21,10 +21,12 @@ import {
   addItem,
   addCardLike,
   removeCardLike,
+  updateUserProfile,
 } from "../../utils/api";
 import { signup, signin, getCurrentUser } from "../../utils/auth"; // Import signup and signin functions
 import CurrentUserContext from "../../contexts/CurrentUserContext"; // Import CurrentUserContext
 import EditProfileModal from "../EditProfileModal/EditProfileModal"; // Import EditProfileModal
+import { request } from "../../utils/api";
 
 function App() {
   // State variables for weather data and modals
@@ -177,28 +179,22 @@ function App() {
       });
   };
 
-  // Handler to update user profile
+  /**
+   * Handles updating the user profile.
+   *
+   * @param {object} data - The updated user data.
+   * @returns {Promise} - Resolves after the profile is updated.
+   */
   const handleUpdateProfile = ({ name, avatar }) => {
-    const token = localStorage.getItem("jwt"); // Retrieve JWT token from localStorage
-
-    return fetch("http://localhost:3001/users/me", {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Include JWT token in headers
-      },
-      body: JSON.stringify({ name, avatar }),
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return res.json().then((err) => Promise.reject(err));
-        }
-        return res.json();
-      })
+    return updateUserProfile({ name, avatar })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
-        console.log("Updated User:", updatedUser); // Debugging line
         return updatedUser;
+      })
+      .catch((error) => {
+        console.error("Error updating profile:", error);
+        setError("Failed to update profile. Please try again.");
+        throw error;
       });
   };
 

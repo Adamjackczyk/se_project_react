@@ -111,20 +111,15 @@ export function removeCardLike(id, token) {
  * @param {object} data - The updated user data (name and avatar).
  * @returns {Promise} - Resolves with the updated user data.
  */
-export const updateUserProfile = ({ name, avatar }) => {
+export function updateUserProfile({ name, avatar }) {
   const token = localStorage.getItem("jwt"); // Retrieve JWT token from localStorage
 
-  return fetch(`${baseUrl}/users/me`, {
+  return request(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`, // Include JWT token in headers
     },
     body: JSON.stringify({ name, avatar }),
-  }).then((res) => {
-    if (!res.ok) {
-      return res.json().then((err) => Promise.reject(err));
-    }
-    return res.json();
   });
-};
+}

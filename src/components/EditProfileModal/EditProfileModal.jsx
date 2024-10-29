@@ -51,7 +51,6 @@ const EditProfileModal = ({ isOpen, onClose, onUpdateProfile }) => {
     // Make the API call to update user profile via the passed handler
     onUpdateProfile(updatedData)
       .then((updatedUser) => {
-        console.log("Profile updated successfully:", updatedUser); // Debugging line
         // Clear form fields (optional)
         setName("");
         setAvatar("");
