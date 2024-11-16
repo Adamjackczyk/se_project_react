@@ -123,3 +123,8 @@ export const coordinates = {
 };
 
 export const APIkey = "c17a71d4622d559b5c6fdc0167bff5cf";
+
+export const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.wtwr.farted.net"
+    : "http://localhost:3001";
