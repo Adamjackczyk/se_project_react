@@ -1,6 +1,7 @@
 // src/utils/auth.js
 
 import { request } from "./api";
+import { baseUrl } from "./constants";
 
 /**
  * Registers a new user.
@@ -12,7 +13,7 @@ import { request } from "./api";
  * @returns {Promise} - Resolves with the server response or rejects with an error.
  */
 export const signup = (name, avatar, email, password) => {
-  return request("http://localhost:3001/signup", {
+  return request(`${baseUrl}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -29,7 +30,7 @@ export const signup = (name, avatar, email, password) => {
  * @returns {Promise} - Resolves with the server response containing the JWT token or rejects with an error.
  */
 export const signin = (email, password) => {
-  return request("http://localhost:3001/signin", {
+  return request(`${baseUrl}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,7 +46,7 @@ export const signin = (email, password) => {
  * @returns {Promise} - Resolves with the current user data or rejects with an error.
  */
 export const getCurrentUser = (token) => {
-  return request("http://localhost:3001/users/me", {
+  return request(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
