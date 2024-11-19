@@ -21,7 +21,7 @@ function ItemCard({ item, onCardClick, onCardLike }) {
 
   // Determine if the current user has liked the item
   const isLiked = currentUser
-    ? item.likes.some((user) => user._id === currentUser._id)
+    ? item.likes.some((userId) => userId === currentUser._id)
     : false;
 
   // Determine which like icon to show
